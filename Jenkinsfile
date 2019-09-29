@@ -58,9 +58,6 @@ withMaven(maven : 'LocalMaven')
 
 
 
-}
-
-
 
   {
 stage ('deploy to tomcat') {
@@ -72,3 +69,5 @@ steps {
       }
                            }
   }
+  
+}
