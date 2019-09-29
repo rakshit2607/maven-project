@@ -62,13 +62,13 @@ withMaven(maven : 'LocalMaven')
 
 
 
-
+  {
 stage ('deploy to tomcat') {
 
 steps {
   sshagent (['54.93.248.194']) {
-    sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@54.93.248.194:/var/lib/tomcat/webapps'
+    sh 'scp -o StrictHostKeyChecking=no **/*.war ec2-user@54.93.248.194:/var/lib/tomcat/webapps'
   }
-}
-}
-
+      }
+                           }
+  }
