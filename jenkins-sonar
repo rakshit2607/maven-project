@@ -1,57 +1,48 @@
 pipeline {
-	agent any
-	
-	
-	stages
-	{
-		stage ("scm checkout")
-		{
-git 'https://github.com/rakshit2607/maven-project.git'
-		}
-	}
-   {
-		stage ('Test stage'){
-			steps {
-				withMaven(maven: 'LocalMaven') 
-					{
-						sh 'mvn test'
-					}
-				}
-			}
-	}
+    agent any
 
-	{
- 	stage ('create package'){
-			steps {
-					withMaven(maven: 'LocalMaven') 
-						{
-							sh 'mvn package'
-						}
-					}
-				}
-	}
-	{
-   stage ('Install package'){
-		steps {
-			withMaven(maven: 'LocalMaven') 
-				{
-					sh 'mvn install'
-				}
-			}
-		}
-	}
 
-	{
-		stage ("Invoke Sonarqube validation")
-		{
-			steps
-				{
-					withSonarQubeEnv('sonar') 
-					withMaven(maven: 'LocalMaven') 
-						{
-							sh 'clean install sonar:sonar'
-						}
-				}
-		}
-	}
+    stages {
+        stage('SCM Checkout'){
+          git 'https://github.com/rakshit2607/maven-project.git'
+        }
+    }
+    {
+        stage ('Compile Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn clean compile'
+                }
+            }
+        }
+
+        stage ('Testing Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+
+        stage ('install Stage') {
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn install'
+                }
+            }
+        }
+
+        stage ('build && SonarQube analysis') {
+            steps {
+		withSonarQubeEnv('sonar') {
+                    withMaven(maven : 'LocalMaven') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
+		}	
+            }
+        }
+}
 }
