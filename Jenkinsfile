@@ -42,17 +42,6 @@ withMaven(maven : 'LocalMaven')
 
 
 
-{
-stage ("Install") {
-
-steps {
-withMaven(maven : 'LocalMaven')
-    {
-	sh 'mvn install'
-	}
-	  }
-	              }
-}
 
 
 
