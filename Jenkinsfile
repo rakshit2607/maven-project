@@ -40,7 +40,7 @@ withMaven(maven : 'LocalMaven')
                  }
 }
 
-
+{
 stage ('build and SonarQube analysis') {
 steps {
 
@@ -48,7 +48,7 @@ withSonarQubeEnv('sonar') {
 withMaven(maven : 'LocalMaven'){
 sh 'mvn clean package sonar:sonar'
 }}}}
-
+}
 
 
   
