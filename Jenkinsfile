@@ -41,10 +41,6 @@ withMaven(maven : 'LocalMaven')
 }
 
 
-
-
-
-
 stage ('build and SonarQube analysis') {
 steps {
 
@@ -55,17 +51,5 @@ sh 'mvn clean package sonar:sonar'
 
 
 
-
-
-  {
-stage ('deploy to tomcat') {
-
-steps {
-  sshagent (['54.93.248.194']) {
-    sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@54.93.248.194:/var/lib/tomcat/webapps'
-  }
-      }
-                           }
-  }
   
 }
